@@ -1,4 +1,4 @@
-import { SNSClient, PublishCommand } from "@aws-sdk/client-sns";
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 
 /**
  * The SNS client.
@@ -15,7 +15,8 @@ const toInput = (message) => {
     return {
         Message: JSON.stringify(message),
         TopicArn: 'arn:aws:sns:us-east-1:590183686355:SaveDataSNS.fifo',
-        MessageGroupId: 'SaveDataSNS'
+        MessageGroupId: 'SaveDataSNS',
+        MessageDeduplicationId: new Date().getTime().toString()
     };
 };
 
