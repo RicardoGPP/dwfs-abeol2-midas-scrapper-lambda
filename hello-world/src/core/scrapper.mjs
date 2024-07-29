@@ -1,22 +1,31 @@
-import GeolocalizationService from './../service/geolocalization-service.mjs';
-import NfceService from './../service/nfce-service.mjs';
+import { getPage } from './../service/nfce-service.mjs';
+import { getLatLng } from './../service/geolocalization-service.mjs';
 import * as cheerio from 'cheerio';
 
 /**
- * Clears the text by removing extra spaces.
+ * Scrapes the supermarket, product and price data from a NFC-e URL.
  * 
- * @param {String} text The text to be cleaned.
- * @returns The cleaned text.
+ * @param {String} url The NFC-e URL to be scraped.
+ * @returns An object with the scraped data.
  */
-const clear = (text) => text?.replace(/\s+/g, ' ').trim();
+const scrape = async (url) => {
+    try {
+        const page = await getPage(url);
+        const $ = cheerio.load(page);
 
-/**
- * Converts a text into a number value.
- * 
- * @param {String} text The text to be converted.
- * @returns The converted number value.
- */
-const toNumber = (text) => parseFloat(text.replace(/[^0-9,.-]+/g, '').replace(',', '.'));
+        const supermarket = getSupermarket($);
+        const address = await getAddress($);
+        const products = getProducts($);
+
+        return {
+            ...supermarket,
+            address,
+            products
+        };
+    } catch (error) {
+        console.error(error);
+    }
+};
 
 /**
  * Gets the supermarket data.
@@ -41,28 +50,25 @@ const getSupermarket = ($) => {
 const getAddress = async ($) => {
     const terms = clear($('td[style*="italic"]').text()).split(',');
 
-    const street = clear(terms[0]);
-    const number = clear(terms[1]);
-    const neighborhood = clear(terms[2]);
-    const zipCode = clear(terms[3].split(' ')[1]);
-    const city = clear(terms[3].split('-')[1]);
-    const state = clear(terms[4].split('-')[0]);
+    const address = {
+        street: clear(terms[0]),
+        number: clear(terms[1]),
+        neighborhood: clear(terms[2]),
+        zipCode: clear(terms[3].split(' ')[1]),
+        city: clear(terms[3].split('-')[1]),
+        state: clear(terms[4].split('-')[0])
+    };
 
     let latlng = {};
 
     try {
-        latlng = await GeolocalizationService.getLatLng(zipCode);
+        latlng = await getLatLng(address);
     } catch (error) {
         console.error(error);
     }
 
     return {
-        street,
-        number,
-        neighborhood,
-        zipCode,
-        city,
-        state,
+        ...address,
         ...latlng
     };
 };
@@ -104,26 +110,19 @@ const getProducts = ($) => {
 };
 
 /**
- * Scrapes the supermarket, product and price data from a NFC-e URL.
+ * Clears the text by removing extra spaces.
  * 
- * @param {String} url The NFC-e URL to be scraped.
- * @returns An object with the scraped data.
+ * @param {String} text The text to be cleaned.
+ * @returns The cleaned text.
  */
-export const scrape = async (url) => {
-    try {
-        const page = await NfceService.getPage(url);
-        const $ = cheerio.load(page);
+const clear = (text) => text?.replace(/\s+/g, ' ').trim();
 
-        const supermarket = getSupermarket($);
-        const address = await getAddress($);
-        const products = getProducts($);
+/**
+ * Converts a text into a number value.
+ * 
+ * @param {String} text The text to be converted.
+ * @returns The converted number value.
+ */
+const toNumber = (text) => parseFloat(text.replace(/[^0-9,.-]+/g, '').replace(',', '.'));
 
-        return {
-            ...supermarket,
-            address,
-            products
-        };
-    } catch (error) {
-        console.error(error);
-    }
-};
+export { scrape };

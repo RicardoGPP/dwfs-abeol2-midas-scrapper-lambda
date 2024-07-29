@@ -1,5 +1,5 @@
-import { scrape } from './src/scrapper.mjs';
-import { publish } from './src/sns-publisher.mjs';
+import { scrape } from './src/core/scrapper.mjs';
+import { publish } from './src/util/sns-publisher.mjs';
 
 /**
  * Handles a scrape event.
@@ -7,7 +7,7 @@ import { publish } from './src/sns-publisher.mjs';
  * @param {Object} event The event to be handled.
  * @returns A HTTP-prepared response.
  */
-export const lambdaHandler = async (event) => {
+const lambdaHandler = async (event) => {
     for (const record of event.Records) {
         const body = JSON.parse(record.body);
         const url = body.Message;
@@ -15,3 +15,5 @@ export const lambdaHandler = async (event) => {
         await publish(message);
     }
 };
+
+export { lambdaHandler };
