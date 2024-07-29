@@ -5,11 +5,13 @@ Este projeto faz parte do trabalho da disciplina de Arquitetura de Backend do cu
 ## Principais arquivos do projeto
 
  - [template.yaml](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/template.yaml): Descreve os recursos a serem provisionados na AWS;
- - [app.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/hello-world/app.mjs): Faz a tratativa de eventos de scrapping;
- - [scrapper.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/hello-world/src/scrapper.mjs): Faz o scrapping dos dados à partir da página de uma NFC-e;
- - [sns-publisher.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/hello-world/src/sns-publisher.mjs): Publica uma mensagem com os dados da NFC-e no tópico de salvamento no banco;
- - [geolocalization-service.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/hello-world/service/geolocalization-service.mjs): Faz a busca da latitude e longitude à partir de um CEP;
- - [nfce-service.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/hello-world/service/nfce-service.mjs): Recupera a página da web referente à URL de uma NFC-e.
+ - [app.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/app.mjs): Faz a tratativa de eventos de scrapping;
+ - [scrapper.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/core/scrapper.mjs): Faz o scrapping dos dados à partir da página de uma NFC-e;
+ - [sns-publisher.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/publisher/sns-publisher.mjs): Publica uma mensagem com os dados da NFC-e no tópico de salvamento no banco;
+ - [geolocalization-service.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/service/geolocalization-service.mjs): Faz a busca da latitude e longitude à partir de um CEP;
+ - [nfce-service.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/service/nfce-service.mjs): Recupera a página da web referente à URL de uma NFC-e;
+ - [latlng.csv](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/resource/latlng.csv): Contém uma relação entre cidades e suas respectivas latitude e longitude;
+ - [constants.mjs](https://github.com/RicardoGPP/dwfs-abeol2-midas-scrapper-lambda/blob/main/app/src/util/constants.mjs): Contém constantes de configuração da AWS.
 
 ## Funcionamento
 
