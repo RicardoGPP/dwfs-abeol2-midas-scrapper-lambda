@@ -1,5 +1,5 @@
 import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
-import { AWS_ACCOUNT_ID, AWS_TOPIC, AWS_MESSAGE_GROUP_ID, AWS_REGION } from '../constants/constants.mjs';
+import { AWS_ACCOUNT_ID, AWS_TOPIC, AWS_MESSAGE_GROUP_ID, AWS_REGION } from './../util/constants.mjs';
 
 /**
  * The SNS client.

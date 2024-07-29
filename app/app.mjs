@@ -1,5 +1,5 @@
 import { scrape } from './src/core/scrapper.mjs';
-import { publish } from './src/util/sns-publisher.mjs';
+import { publish } from './src/publisher/sns-publisher.mjs';
 
 /**
  * Handles a scrape event.

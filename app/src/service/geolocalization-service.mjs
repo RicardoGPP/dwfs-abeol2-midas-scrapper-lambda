@@ -41,7 +41,7 @@ const getLatLngByZipCodeFromApi = async (zipCode) => {
  * @returns An object containing the latitude and longitude.
  */
 const getLatLngByCityAndStateFromCsv = (city, state) => {
-    const csv = fs.readFileSync(`${process.cwd()}/src/resources/latlng.csv`, 'utf-8');
+    const csv = fs.readFileSync(`${process.cwd()}/src/resource/latlng.csv`, 'utf-8');
 
     const rows = csv.split('\n');
 
