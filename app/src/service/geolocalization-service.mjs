@@ -59,8 +59,8 @@ const getLatLngByCityAndStateFromCsv = (city, state) => {
         }
 
         return {
-            latitude: Number(columns[3]),
-            longitude: Number(columns[4])
+            latitude: Number(columns[4]),
+            longitude: Number(columns[3])
         };
     }
 
